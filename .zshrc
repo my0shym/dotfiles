@@ -23,6 +23,7 @@ alias tfw='terraform workspace'
 
 # エディタで開く
 alias vs='open $1 -a "/Applications/Visual Studio Code.app"'
+alias cur='open $1 -a "/Applications/Cursor.app"'
 
 # historyを100件表示
 HISTSIZE=1000
@@ -98,9 +99,18 @@ function peco-select-git-branch() {
     zle reset-prompt
 }
 
+#  git stash applyをpecoでやるエイリアス
+alias gitsa='git stash list | peco | awk -F '\'':'\'' '\''{print $1}'\''  | xargs -IXXX git stash apply XXX'
+
+
+
+
 # キーバインドの設定
 zle -N peco-select-git-branch
 bindkey "^b" peco-select-git-branch
 
 # docker psしてexecでshでコンテナに入る
 alias dpe='docker exec -it $(docker ps |peco|awk "{print \$1}") /bin/sh'
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
