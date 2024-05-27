@@ -98,16 +98,24 @@ function peco-select-git-branch() {
     fi
     zle reset-prompt
 }
-
-#  git stash applyをpecoでやるエイリアス
-alias gitsa='git stash list | peco | awk -F '\'':'\'' '\''{print $1}'\''  | xargs -IXXX git stash apply XXX'
-
-
-
-
 # キーバインドの設定
 zle -N peco-select-git-branch
 bindkey "^b" peco-select-git-branch
+
+# Pecoでgit stashを検索してapplyする関数
+function peco-select-git-stash-apply() {
+    local selected_stash
+    selected_stash=$(git stash list 2> /dev/null | peco --query "$LBUFFER" | awk -F ':' '{print $1}')
+    if [ -n "$selected_stash" ]; then
+        BUFFER="git stash apply $selected_stash"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+# キーバインドの設定
+zle -N peco-select-git-stash-apply
+bindkey "^g" peco-select-git-stash-apply
+
 
 # docker psしてexecでshでコンテナに入る
 alias dpe='docker exec -it $(docker ps |peco|awk "{print \$1}") /bin/sh'
