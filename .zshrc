@@ -114,11 +114,24 @@ function peco-select-git-stash-apply() {
 }
 # キーバインドの設定
 zle -N peco-select-git-stash-apply
-bindkey "^g" peco-select-git-stash-apply
+bindkey "^a" peco-select-git-stash-apply
+
+# Pecoでgit stashを検索してpopする関数
+function peco-select-git-stash-pop() {
+    local selected_stash
+    selected_stash=$(git stash list 2> /dev/null | peco --query "$LBUFFER" | awk -F ':' '{print $1}')
+    if [ -n "$selected_stash" ]; then
+        BUFFER="git stash pop $selected_stash"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+# キーバインドの設定
+zle -N peco-select-git-stash-pop
+bindkey "^p" peco-select-git-stash-pop
 
 
 # docker psしてexecでshでコンテナに入る
 alias dpe='docker exec -it $(docker ps |peco|awk "{print \$1}") /bin/sh'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
