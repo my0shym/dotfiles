@@ -21,6 +21,11 @@ alias da='direnv allow'
 alias tf='terraform'
 alias tfw='terraform workspace'
 
+# 現在のブランチにpushする
+alias gitpusho='git push origin $(git rev-parse --abbrev-ref HEAD)'
+# 現在のブランチ名をクリップボードにコピーする
+alias copy-branch='git rev-parse --abbrev-ref HEAD | pbcopy'
+
 # エディタで開く
 alias vs='open $1 -a "/Applications/Visual Studio Code.app"'
 alias cur='open $1 -a "/Applications/Cursor.app"'
