@@ -20,15 +20,17 @@ alias ave='aws-vault exec'
 alias da='direnv allow'
 alias tf='terraform'
 alias tfw='terraform workspace'
-
-# 現在のブランチにpushする
+# 現在のbranchにpushする
 alias gitpusho='git push origin $(git rev-parse --abbrev-ref HEAD)'
-# 現在のブランチ名をクリップボードにコピーする
-alias copy-branch='git rev-parse --abbrev-ref HEAD | pbcopy'
+# 現在のbranch名をコピーする
+alias gitbrcp='git rev-parse --abbrev-ref HEAD | pbcopy'
 
 # エディタで開く
 alias vs='open $1 -a "/Applications/Visual Studio Code.app"'
 alias cur='open $1 -a "/Applications/Cursor.app"'
+
+# ビープ音を鳴らす
+alias beep='afplay /System/Library/Sounds/Ping.aiff'
 
 # historyを100件表示
 HISTSIZE=1000
@@ -117,9 +119,9 @@ function peco-select-git-stash-apply() {
     fi
     zle reset-prompt
 }
-# キーバインドの設定(applyのl)
+# キーバインドの設定
 zle -N peco-select-git-stash-apply
-bindkey "^l" peco-select-git-stash-apply
+bindkey "^o" peco-select-git-stash-apply
 
 # Pecoでgit stashを検索してpopする関数
 function peco-select-git-stash-pop() {
